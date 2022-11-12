@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8082
 spring:
   datasource:
     username: root
@@ -8,7 +8,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
   application:
-    name: user-service
+    name: order-service
   cloud:
     nacos:
       server-addr: localhost:8848
