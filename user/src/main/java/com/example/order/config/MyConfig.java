@@ -1,5 +1,8 @@
 package com.example.order.config;
 
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -13,5 +16,14 @@ public class MyConfig {
     @LoadBalanced
     public RestTemplate getRestTemplate(RestTemplateBuilder builder) {
         return builder.build();
+    }
+
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+        PaginationInnerInterceptor interceptor = new PaginationInnerInterceptor(DbType.MYSQL);
+        interceptor.setOverflow(true);
+        mybatisPlusInterceptor.addInnerInterceptor(interceptor);
+        return mybatisPlusInterceptor;
     }
 }
