@@ -6,7 +6,7 @@
     <modules>
         <module>order</module>
         <module>user</module>
-        <module>com</module>
+        <module>core</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
