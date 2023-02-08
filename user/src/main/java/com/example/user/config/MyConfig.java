@@ -1,4 +1,4 @@
-package com.example.order.config;
+package com.example.user.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>user</title>
+    <script src="../static/js/http_cdn.jsdelivr.net_npm_vue_dist_vue.js"></script>
+    <script src="../static/js/http_unpkg.com_axios_dist_axios.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../static/css/http_unpkg.com_element-ui_lib_theme-chalk_index.css">
+    <!-- 引入组件库 -->
+    <script src="../static/js/http_unpkg.com_element-ui_lib_index.js"></script>
+</head>
+<body>
+<!-- 搜索 -->
+<div id="userInfo">
+    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="姓名">
+            <el-input v-model="formInline.user" placeholder="姓名"></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="selectByPage">查询</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+<!-- 数据 -->
+</body>
+<script>
+    let app = new Vue({
+        el: "#userInfo",
+        data: {
+            formInline: {
+                username: "",
+                pageNo: 0,
+                pageSize: 10
+            }
+        },
+        methods: {
+            selectByPage: function (pageNo, pageSize, userName) {
+                //axios
+                axios.post("http://localhost:8081/user/list", {
+                    pageNo: pageNo,
+                    pageSize: pageSize,
+                    name: userName
+                }).then(function (response) {
+                    console.log(response)
+                }, function (error) {
+                    console.log(error)
+                });
+                // axios.get("http://localhost:8081/user/list?pageNo=" + pageNo + "&pageSize=" + pageSize + "&name=" + userName).then(function (response) {
+                //     console.log(response)
+                // }, function (error) {
+                //     console.log(error)
+                // });
+            }
+        },
+        created: function () {
+            this.selectByPage(1, 2, "")
+            console.log("------created-----------")
+        },
+        mounted: function () {
+            console.log("``````mounted```````````")
+        }
+    });
+</script>
+</html>
