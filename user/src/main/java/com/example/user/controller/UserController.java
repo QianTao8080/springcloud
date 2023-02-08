@@ -5,6 +5,7 @@ import com.example.user.openfeign.OrderFeignService;
 import com.example.user.service.UserService;
 import com.google.common.collect.Maps;
 import dto.PageParam;
+import dto.PageResult;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,14 +34,14 @@ public class UserController {
         return null;
     }
 
-    //    @RequestMapping("/list")
     @PostMapping("/list")
-    public Object queryUserByPage(PageParam param) {
+    public Object queryUserByPage(@RequestBody PageParam param) {
         IPage<User> page = userService.queryByPage(param.getPageNo(), param.getPageSize(), param.getName());
-        Map<String, Object> result = Maps.newHashMap();
-        result.put("list", page.getRecords());
-        result.put("pageNo", page.getCurrent());
-        result.put("pageNum0", page.getPages());
+        PageResult<User> result = new PageResult<>();
+        result.setResult(page.getRecords());
+        result.setPageNum(page.getPages());
+        result.setTotal(page.getTotal());
+        result.setParam(param);
         return result;
     }
 }

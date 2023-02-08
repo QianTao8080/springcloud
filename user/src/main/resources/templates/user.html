@@ -21,8 +21,30 @@
             <el-button type="primary" @click="selectByPage">查询</el-button>
         </el-form-item>
     </el-form>
+    <!-- 数据 -->
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <td>id</td>
+                <td>姓名</td>
+                <td>性别</td>
+                <td>年龄</td>
+                <td>生日</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="user in pageList">
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.sex }}</td>
+                <td>{{ user.age }}</td>
+                <td>{{ user.birth }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-<!-- 数据 -->
 </body>
 <script>
     let app = new Vue({
@@ -30,19 +52,26 @@
         data: {
             formInline: {
                 username: "",
-                pageNo: 0,
-                pageSize: 10
-            }
+            },
+            pageNo: 1,
+            pageSize: 10,
+            pageNum: 0,
+            pageList: [],
         },
         methods: {
             selectByPage: function (pageNo, pageSize, userName) {
+                let that = this;
                 //axios
                 axios.post("http://localhost:8081/user/list", {
                     pageNo: pageNo,
                     pageSize: pageSize,
                     name: userName
                 }).then(function (response) {
-                    console.log(response)
+                    let resultData = response.data;
+                    that.pageNo = resultData.pageNo
+                    that.pageSize = resultData.pageSize
+                    that.pageNum = resultData.pageNum;
+                    that.pageList = resultData.result
                 }, function (error) {
                     console.log(error)
                 });

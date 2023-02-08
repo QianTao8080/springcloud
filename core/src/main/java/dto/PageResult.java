@@ -7,10 +7,8 @@ import java.util.List;
 @Data
 public class PageResult<T> {
 
-    private int pageNo;
-    private int pageSize;
-    private int pageNum;
-    private int total;
     private PageParam param;
+    private long pageNum;
+    private long total;
     private List<T> result;
 }
