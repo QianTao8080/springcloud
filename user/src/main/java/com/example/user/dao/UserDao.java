@@ -15,16 +15,41 @@ public class UserDao {
     @Autowired
     private IUserMapper userMapper;
 
+    /**
+     * 根据id查询
+     *
+     * @param id
+     * @return
+     */
     public User getById(int id) {
         return userMapper.selectById(id);
     }
 
-    public void queryByPage(int pageNo, int pageSize, String name) {
-        IPage<User> page = new Page<>(pageNo, pageSize);
+    /**
+     * 分页查询
+     *
+     * @param pageNo
+     * @param pageSize
+     * @param name
+     * @return
+     */
+    public IPage<User> queryByPage(int pageNo, int pageSize, String name) {
+        IPage<User> page = new Page<User>(pageNo, pageSize);
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
         if (!StringUtils.isEmpty(name)) {
             queryWrapper.lambda().like(User::getName, name);
         }
-        page = userMapper.selectPage(page, queryWrapper);
+        return userMapper.selectPage(page, queryWrapper);
+    }
+
+    /**
+     * 新增用户
+     *
+     * @param user
+     * @return
+     */
+    public User addUser(User user) {
+        userMapper.insert(user);
+        return user;
     }
 }

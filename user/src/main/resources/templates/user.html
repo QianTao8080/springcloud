@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>user</title>
+    <script src="../static/js/http_cdn.jsdelivr.net_npm_vue_dist_vue.js"></script>
+    <script src="../static/js/http_unpkg.com_axios_dist_axios.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../static/css/http_unpkg.com_element-ui_lib_theme-chalk_index.css">
+    <!-- 引入组件库 -->
+    <script src="../static/js/http_unpkg.com_element-ui_lib_index.js"></script>
+</head>
+<body>
+<div id="userInfo">
+    <input type="text" v-model="username"/>
+    <button @click="selectByPage(pageNo,pageSize,username)">搜索</button>
+    <button @click="showAddDiv()">新增</button>
+    <div v-if="showAdd">
+        <label>新增</label>
+        <label>姓名</label>：<input type="text" v-model="addUser.name"/>
+        <label>性别：</label><input type="number" v-model="addUser.sex"/>
+        <label>年龄：</label><input type="number" v-model="addUser.age"/>
+        <label>生日：</label> <input type="text" v-model="addUser.birth"/>
+    </div>
+    <div v-show="showEdit">
+        <label>编辑</label>
+        <label>姓名：</label><input type="text" v-model="editUser.name"/>
+        <label>性别：</label><input type="number" v-model="editUser.sex"/>
+        <label>年龄：</label><input type="number" v-model="editUser.age"/>
+        <label>生日：</label><input type="text" v-model="editUser.birth"/>
+    </div>
+    <!-- 数据 -->
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <td>id</td>
+                <td>姓名</td>
+                <td>性别</td>
+                <td>年龄</td>
+                <td>生日</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="user in pageList">
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.sex }}</td>
+                <td>{{ user.age }}</td>
+                <td>{{ user.birth }}</td>
+                <td>
+                    <button @click="showEditDiv(user)">编辑</button>
+                    <button @click="delUser(user.id)">删除</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <button @click="selectByPage(Math.max(pageNo-1,1),pageSize,username)">上一页</button>
+            <a href="#">{{ pageNo }}</a>
+            <button @click="selectByPage(Math.min(pageNo+1,pageNum),pageSize,username)">下一页</button>
+            <label>总页数:{{ pageNum }}</label>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    let app = new Vue({
+        el: "#userInfo",
+        data: {
+            username: "",
+            pageNo: 1,
+            pageSize: 10,
+            pageNum: 0,
+            pageList: [],
+            showAdd: false,
+            showEdit: false,
+            addUser: {
+                name: "",
+                age: 0,
+                sex: 0,
+                birth: ""
+            },
+            editUser: {
+                name: "",
+                age: 0,
+                sex: 0,
+                birth: ""
+            }
+        },
+        methods: {
+            selectByPage: function (pageNo, pageSize, userName) {
+                //axios
+                axios.post("/user/list", {
+                    pageNo: pageNo,
+                    pageSize: pageSize,
+                    name: userName
+                }).then(response => {
+                    let resultData = response.data;
+                    this.pageNo = resultData.param.pageNo
+                    this.pageSize = resultData.param.pageSize
+                    this.username = resultData.param.name
+                    this.pageNum = resultData.pageNum;
+                    this.pageList = resultData.result
+                }, error => {
+                    console.log(error)
+                });
+                // axios.get("http://localhost:8081/user/list?pageNo=" + pageNo + "&pageSize=" + pageSize + "&name=" + userName).then(function (response) {
+                //     console.log(response)
+                // }, function (error) {
+                //     console.log(error)
+                // });
+            },
+            showAddDiv: () => {
+                this.showAdd = !this.showAdd
+                console.log(this.showAdd)
+            },
+            showEditDiv: (user) => {
+                this.editUser = user
+                this.showEdit = !this.showEdit
+            },
+        },
+        created: function () {
+            console.log("------created-----------")
+        },
+        mounted: function () {
+            console.log("``````mounted```````````")
+            this.selectByPage(1, 2, "")
+        }
+    });
+</script>
+</html>

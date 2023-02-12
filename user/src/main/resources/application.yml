@@ -11,4 +11,17 @@ spring:
     name: user-service
   cloud:
     nacos:
-      server-addr: localhost:8848
+      discovery:
+        server-addr: localhost:8848
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  web:
+    resources:
+      static-locations: classpath:/static/   #指定本地静态资源位置
+  mvc:
+    static-path-pattern: /static/**    #指定url地址和静态资源的映射关系
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

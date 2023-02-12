@@ -1,4 +1,4 @@
-package com.example.order.controller;
+package com.example.user.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
