@@ -3,7 +3,6 @@ package com.example.user.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.user.openfeign.OrderFeignService;
 import com.example.user.service.UserService;
-import com.google.common.collect.Maps;
 import dto.PageParam;
 import dto.PageResult;
 import entity.User;
@@ -14,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Map;
-
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user/")
 public class UserController {
 
     @Autowired
@@ -27,14 +24,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/order")
+    @RequestMapping("order")
     public Object queryOrder() {
 //        template.getForObject("http://order-service/order/1", Integer.class);
         orderFeignService.getOrder(1);
         return null;
     }
 
-    @PostMapping("/list")
+    @PostMapping("list")
     public Object queryUserByPage(@RequestBody PageParam param) {
         IPage<User> page = userService.queryByPage(param.getPageNo(), param.getPageSize(), param.getName());
         PageResult<User> result = new PageResult<>();
@@ -43,5 +40,11 @@ public class UserController {
         result.setTotal(page.getTotal());
         result.setParam(param);
         return result;
+    }
+
+    @PostMapping("add")
+    public Object addUser(User user) {
+        userService.addUser(user);
+        return user;
     }
 }
