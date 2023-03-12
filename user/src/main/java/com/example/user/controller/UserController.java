@@ -27,8 +27,7 @@ public class UserController {
     @RequestMapping("order")
     public Object queryOrder() {
 //        template.getForObject("http://order-service/order/1", Integer.class);
-        orderFeignService.getOrder(1);
-        return null;
+        return orderFeignService.getOrder(1);
     }
 
     @PostMapping("list")

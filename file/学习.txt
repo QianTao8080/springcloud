@@ -1,4 +1,6 @@
 1.数据库存储过程
+    1)https://www.cnblogs.com/exmyth/p/3303470.html
+    2)https://blog.csdn.net/ReincarnationArm/article/details/124572991
 2.自定义注解及扫描？
     1）有一个框架
 3.aop
@@ -7,4 +9,8 @@
 6.mysql集群？
 7.docker
 8.设计模式
-9.
+9.消息队列  kafka
+10.websocket
+11.数据库
+12.热更新
+13.java虚拟机

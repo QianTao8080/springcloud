@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Data
 @ToString
-@TableName("order")
+@TableName("test_order")
 public class Order {
 
     /**
@@ -19,6 +19,8 @@ public class Order {
      */
     @TableId(value = "n_uid", type = IdType.AUTO)
     private long uid;
+    @TableField("n_user_id")
+    private int userId;
     /**
      * 商品id
      */

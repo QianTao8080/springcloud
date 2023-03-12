@@ -6,5 +6,10 @@
     这时启动了两个order-service. 其中一个挂了，1/2=0.5  0.5<0.6 则触发阈值，此时有新的请求过来时，负载均衡会把那个失败的服务还拿出来用，
     就是防止剩下的服务也被巨大的请求撑爆了。
 
- 2.
+ 2.使用springboot的@EnableConfigurationProperties和@PropertySource来导入自定义的配置类，读不到配置文件内容的原因：
+    @EnableConfigurationProperties 他在SpringBoot 2.2.0以前 @Import 导入的不是 EnableConfigurationPropertiesRegistrar 这个类，
+    所以能读到配置内容，而EnableConfigurationPropertiesRegistrar 是在处理@SpringBootApplication这个配置时加载出来的。
+    ConfigurationClassPostProcessor 经过倒是也经过了，不过处理的是项目启动类。EnableConfigurationPropertiesRegistrar 它内部实现加载
+    @ConfigurationProperties 修饰的类时，都不会走那个完整的Bean 生命周期，直接生成 BeanDefinition 就往 BeanFactory 里塞了。所以也没有地方会
+    对 @PropertySource 注解进行处理了。
 

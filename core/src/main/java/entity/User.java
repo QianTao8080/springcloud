@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Data
 @ToString
-@TableName("user")
+@TableName("test_user")
 public class User {
 
     @TableId(value = "n_id", type = IdType.AUTO)
