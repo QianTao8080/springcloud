@@ -1,0 +1,4 @@
+1.@AutoWrire和@Resource的区别
+    AutoWrite是根据类型去容器里找bean,如果找到一个则直接返回，如果找到多个，则根据名字再筛选
+    Resource则是根据名字去找。如果找到多个则报错
+2.

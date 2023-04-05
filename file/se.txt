@@ -1,0 +1,6 @@
+1.线程池的属性是可以在运行时修改的。可以结合nacos的配置中心，来动态修改配置
+2.如何优雅的关闭一个线程？
+    thread.stop()可以关闭线程，但是太简单粗暴了，而且只会释放synchronize加的锁，lock的锁是不会释放的。
+    正确的关闭线程的方法应该调用thread.interrupt();
+3.synchronized锁升级
+    jdk1.6之前 synchronized都是重量级锁（会调用操作系统的api,同时会阻塞）,1.6之后引入了偏向锁、轻量锁
