@@ -42,3 +42,8 @@
 3.注意区分实例化和初始化
     实例化：创建对象
     初始化：给各个属性赋值
+4.springboot自动装配原理
+    1）@SpringBootApplication注解里有 @EnableAutoConfig,而@EnableAutoCinfig注解里引入了AutoConfigurationImportSelector。
+    2）这个类会去spring.factories文件里找需要装配的类(spring谋个版本之后配置类都放到了org.springframework.boot.autoconfigure.AutoConfiguration.imports里)
+    3）利用的是java SPI机制
+    补：自定义自动配置类 也只需要定义到spring.factories里 就可以（不要以为非要家@AutoCinfig注解）
