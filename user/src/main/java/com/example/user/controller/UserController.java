@@ -3,6 +3,7 @@ package com.example.user.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.user.openfeign.OrderFeignService;
 import com.example.user.service.UserService;
+import com.example.user.util.JedisUtil;
 import dto.PageParam;
 import dto.PageResult;
 import entity.User;
@@ -23,10 +24,13 @@ public class UserController {
     private OrderFeignService orderFeignService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private JedisUtil jedisUtil;
 
     @RequestMapping("order")
     public Object queryOrder() {
 //        template.getForObject("http://order-service/order/1", Integer.class);
+        jedisUtil.set(1, "user","sss");
         return orderFeignService.getOrder(1);
     }
 
@@ -38,6 +42,7 @@ public class UserController {
         result.setPageNum(page.getPages());
         result.setTotal(page.getTotal());
         result.setParam(param);
+        System.out.println("----------" + jedisUtil.get(1, "user"));
         return result;
     }
 
